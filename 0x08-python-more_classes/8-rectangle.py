@@ -1,20 +1,3 @@
-
-MelissaN
-/
-holbertonschool-higher_level_programming
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Security
-Insights
-holbertonschool-higher_level_programming/0x08-python-more_classes/8-rectangle.py
-
-MelissaN class rectangle
- 0 contributors
-108 lines (92 sloc)  3.21 KB
 #!/usr/bin/python3
 """
 Module 8-rectangle
