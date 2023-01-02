@@ -1,126 +1,93 @@
 #!/usr/bin/python3
 """
-Module 100-singly_linked_list
-Defines class Node (with private data and next_node)
-Defines class SinglyLinkedList (with private head and public sorted_insert)
+Module 7-rectangle
+Contains class Rectangle with private attribute width and height,
+public area and perimeter methods, allows printing using any given symbol,
+deletes, and has public attribute to keep track of number of instances
 """
 
 
-class Node:
+class Rectangle():
     """
-    class Node definition
+    Defines class rectangle with private attribute width and height
     Args:
-        data (int): private
-        next_node : private; can be None or Node object
+        width (int): width
+        height (int): height
+    Attributes:
+        number_of_instances (int): number of instances created and not deleted
+        print_symbol (any type): used to print string representation
     Functions:
-        __init__(self, data, next_node=None)
-        data(self)
-        data(self, value)
-        next_node(self)
-        next_node(self, value)
+        __init__(self, width, height)
+        width(self)
+        width(self, value)
+        height(self)
+        height(self, value)
+        area(self)
+        perimeter(self)
+        __str__(self)
+        __repr__(self)
+        __del__(self)
     """
+    number_of_instances = 0
+    print_symbol = "#"
 
-    def __init__(self, data, next_node=None):
-        """
-        Initializes node
-        Attributes:
-            data (int): private
-            next_node : private; can be None or Node object
-        """
-        self.data = data
-        self.next_node = next_node
+    def __init__(self, width=0, height=0):
+        """ Initialize rectangles """
+        self.width = width
+        self.height = height
+        type(self).number_of_instances += 1
+
+    def __del__(self):
+        """ Deletes instance of class """
+        print("Bye rectangle...")
+        type(self).number_of_instances -= 1
 
     @property
-    def data(self):
-        """"
-        Getter
-        Return: data
-        """
-        return self.__data
+    def width(self):
+        """ Getter returns width """
+        return self.__width
 
-    @data.setter
-    def data(self, value):
-        """
-        Setter
-        Args:
-            value: sets data to value if int
-        """
-        if type(value) is not int:
-            raise TypeError("data must be an integer")
-        else:
-            self.__data = value
+    @width.setter
+    def width(self, value):
+        """ Setter sets width if int > 0 """
+        if not isinstance(value, int):
+            raise TypeError("width must be an integer")
+        if value < 0:
+            raise ValueError("width must be >= 0")
+        self.__width = value
 
     @property
-    def next_node(self):
-        """"
-        Getter
-        Return: next_node
-        """
-        return self.__next_node
+    def height(self):
+        """ Getter returns height """
+        return self.__height
 
-    @next_node.setter
-    def next_node(self, value):
-        """
-        Setter
-        Args:
-            value: sets next_node if value is next_node or None
-        """
-        if type(value) is not Node and value is not None:
-            raise TypeError("next_node must be a Node object")
-        else:
-            self.__next_node = value
+    @height.setter
+    def height(self, value):
+        """ Setter sets height if int > 0 """
+        if not isinstance(value, int):
+            raise TypeError("height must be an integer")
+        if value < 0:
+            raise ValueError("height must be >= 0")
+        self.__height = value
 
+    def area(self):
+        """ Return width * height """
+        return self.__width * self.__height
 
-class SinglyLinkedList:
-    """
-    class SinglyLinkedList definition
-    Args:
-        head: private
-    Functions:
-        __init__(self)
-        sorted_insert(self, value)
-    """
-
-    def __init__(self):
-        """
-        Initializes singly linked list
-        Attributes:
-            head: private
-        """
-        self.__head = None
+    def perimeter(self):
+        """ Return 2*width + 2*height (or return 0 if width or height is 0)"""
+        if self.__width == 0 or self.__height == 0:
+            return 0
+        return (2 * self.__width) + (2 * self.height)
 
     def __str__(self):
-        """
-        String representation of singly linked list needed to print
-        """
-        string = ""
-        tmp = self.__head
-        while tmp is not None:
-            string += str(tmp.data)
-            tmp = tmp.next_node
-            if tmp is not None:
-                string += "\n"
-        return string
+        """ Prints rectangle with #'s """
+        if self.__width == 0 or self.__height == 0:
+            return ""
+        pic = "\n".join([str(self.print_symbol) * self.__width
+                         for rows in range(self.__height)])
+        return pic
 
-    def sorted_insert(self, value):
-        """
-        Inserts new nodes into singly linked list in sorted order
-        Args:
-        value: int data for node
-        """
-        new = Node(value)
-        if self.__head is None:
-            self.__head = new
-            return
-
-        tmp = self.__head
-        if new.data < tmp.data:
-            new.next_node = self.__head
-            self.__head = new
-            return
-
-        while (tmp.next_node is not None) and (new.data > tmp.next_node.data):
-            tmp = tmp.next_node
-        new.next_node = tmp.next_node
-        tmp.next_node = new
-        return
+    def __repr__(self):
+        """ String representation to recreate new instance """
+        return "Rectangle({:d}, {:d})".format(self.width, self.height)

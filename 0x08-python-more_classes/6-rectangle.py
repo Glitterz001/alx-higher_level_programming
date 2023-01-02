@@ -1,94 +1,90 @@
 #!/usr/bin/python3
 """
 Module 6-rectangle
-Defines class Rectangle with private size and position; and public area
-Can access and update size and position
-Can print to stdout the square using #'s
+Contains class Rectangle with private attribute width and height,
+public area and perimeter methods, allows printing #'s, deletes,
+and has public attribute to keep track of number of instances
 """
 
 
-class Rectangle:
+class Rectangle():
     """
-    class Rectangle definition
+    Defines class rectangle with private attribute width and height
     Args:
-        size (int): size of a side in rectangle
+        width (int): width
+        height (int): height
+    Attributes:
+        number_of_instances (int): number of instances created and not deleted
     Functions:
-        __init__(self, size, position)
-        size(self)
-        size(self, value)
-        position(self)
-        position(self, value)
+        __init__(self, width, height)
+        width(self)
+        width(self, value)
+        height(self)
+        height(self, value)
         area(self)
-        my_print(self)
+        perimeter(self)
+        __str__(self)
+        __repr__(self)
+        __del__(self)
     """
+    number_of_instances = 0
 
-    def __init__(self, size=0, position=(0, 0)):
-        """
-        Initializes rectangle
-        Attributes:
-            size (int): defaults to 0 if none; don't use __size to call setter
-            position (int): tuple of two positive integers
-        """
-        self.size = size
-        self.position = position
+    def __init__(self, width=0, height=0):
+        """ Initialize rectangles """
+        self.width = width
+        self.height = height
+        type(self).number_of_instances += 1
 
-    @property
-    def size(self):
-        """"
-        Getter
-        Return: size
-        """
-        return self.__size
-
-    @size.setter
-    def size(self, value):
-        """
-        Setter
-        Args:
-            value: sets size to value if int and >= 0
-        """
-        if type(value) is not int:
-            raise TypeError("size must be an integer")
-        elif value < 0:
-            raise ValueError("size must be >= 0")
-        else:
-            self.__size = value
+    def __del__(self):
+        """ Deletes instance of class """
+        print("Bye rectangle...")
+        type(self).number_of_instances -= 1
 
     @property
-    def position(self):
-        """"
-        Getter
-        Return: position
-        """
-        return self.__position
+    def width(self):
+        """ Getter returns width """
+        return self.__width
 
-    @position.setter
-    def position(self, value):
-        """
-        Setter
-        Args:
-            value: sets position to tuple if value is tuple of 2 positive ints
-        """
-        if type(value) is not tuple or len(value) != 2 or \
-           type(value[0]) is not int or type(value[1]) is not int or \
-           value[0] < 0 or value[1] < 0:
-            raise TypeError("position must be a tuple of 2 positive integers")
-        else:
-            self.__position = value
+    @width.setter
+    def width(self, value):
+        """ Setter sets width if int > 0 """
+        if not isinstance(value, int):
+            raise TypeError("width must be an integer")
+        if value < 0:
+            raise ValueError("width must be >= 0")
+        self.__width = value
+
+    @property
+    def height(self):
+        """ Getter returns height """
+        return self.__height
+
+    @height.setter
+    def height(self, value):
+        """ Setter sets height if int > 0 """
+        if not isinstance(value, int):
+            raise TypeError("height must be an integer")
+        if value < 0:
+            raise ValueError("height must be >= 0")
+        self.__height = value
 
     def area(self):
-        """
-        Calculates area of rectangle
-        Returns:
-            area
-        """
-        return (self.__size)**2
+        """ Return width * height """
+        return self.__width * self.__height
 
-    def my_print(self):
-        if self.__size == 0:
-            print("")
-        else:
-            print("\n" * self.__position[1], end="")
-            print("\n".join([" " * self.__position[0] +
-                             "#" * self.__size
-                             for rows in range(self.__size)]))
+    def perimeter(self):
+        """ Return 2*width + 2*height (or return 0 if width or height is 0)"""
+        if self.__width == 0 or self.__height == 0:
+            return 0
+        return (2 * self.__width) + (2 * self.height)
+
+    def __str__(self):
+        """ Prints rectangle with #'s """
+        if self.__width == 0 or self.__height == 0:
+            return ""
+        pic = "\n".join(["#" * self.__width for rows in range(self.__height)])
+        return pic
+
+    def __repr__(self):
+        """ String representation to recreate new instance """
+        return "Rectangle({:d}, {:d})".format(self.width, self.height)
