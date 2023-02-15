@@ -4,7 +4,7 @@
 --      curl [link] -s | mysql -uroot -p hbtn_0d_tvshows
 --
 -- script that lists all genres from hbtn_0d_tvshows and displays the number of shows linked to each
--- each record should display: tv_genres.name - number_shows
+-- each record should display: Tv_genres.genre - Number_shows_linked_to_this_genre
 -- don’t display a genre that doesn’t have any shows linked
 -- results must be sorted in descending order by the number of shows linked
 -- can use only one SELECT statement
