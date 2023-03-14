@@ -1,0 +1,1 @@
+javascript obj_scope_closure
