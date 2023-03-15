@@ -1,7 +1,10 @@
 #!/usr/bin/node
 
-exports.callMeMoby = function (x, theFunction) {
-  for (let i = 0; i < x; i += 1) {
-    theFunction();
+const size = parseInt(process.argv[2], 10);
+if (isNaN(size)) {
+  console.log('Missing size');
+} else {
+  for (let i = 0; i < size; i += 1) {
+    console.log('X'.repeat(size));
   }
-};
+}
